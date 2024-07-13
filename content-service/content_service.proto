@@ -1,0 +1,404 @@
+syntax = "proto3";
+
+option go_package = "generated/content_service";
+
+package content_service;
+
+service Content{
+    rpc CreateStories(CreateStoriesRequest) returns(CreateStoriesResponce);
+    rpc UpdateStories(UpdateStoriesRequest) returns(UpdateStoriesResponce);
+    rpc DeleteStories(DeleteStoriesRequest) returns(DeleteStoriesResponce);
+    rpc GetsStories(GetsStoriesRequest) returns(GetsStoriesResponce);
+    rpc GetStories(GetStoriesRequest) returns(GetStoriesResponce);
+    rpc CommentStories(CommentStoriesRequest) returns(CommentStoriesResponce);
+    rpc GetCommentStories(GetCommentStoriesRequest) returns(GetCommentStoriesResponce);
+    rpc LikeStories(LikeStoriesRequest) returns(LikeStoriesResponce);
+
+    rpc CreateItineraries(CreateItinerariesRequest) returns(CreateItinerariesResponce);
+    rpc UpdateItineraries(UpdateItinerariesRequest) returns(UpdateItinerariesResponce);
+    rpc DeleteItineraries(DeleteItinerariesRequest) returns(DeleteItinerariesResponce);
+    rpc GetsItineraries(GetsItinerariesRequest) returns(GetsItinerariesResponce);
+    rpc GetItineraries(GetItinerariesRequest) returns(GetItinerariesResponce);
+    rpc ItinerariesComment(ItinerariesCommentRequest) returns(ItinerariesCommentResponce);
+
+    rpc GetsDestinations(GetsDestinationsRequest) returns(GetsDestinationsResponce);
+    rpc GetDestinations(GetDestinationsRequest) returns(GetDestinationsResponce);
+   
+    rpc Message(MessageRequest) returns(MessageResponce);
+    rpc GetMessage(GetMessageRequest) returns(GetMessageResponce);
+    
+    rpc AddTravelTips(AddTravelTipsRequest) returns(AddTravelTipsResponce);
+    rpc GetTravelTips(GetTravelTipsRequest) returns(GetTravelTipsResponce);
+    
+    rpc StatisticsUser(StatisticsUserRequest) returns(StatisticsUserResponce);
+
+    rpc GetTrendingDestinations(GetTrendingDestinationsRequest) returns(GetTrendingDestinationsResponce);
+}
+
+message CreateStoriesRequest{
+    string title = 1;
+    string content = 2;
+    string location = 3;
+    repeated string tags = 4;
+    repeated string images = 5;
+}
+
+message CreateStoriesResponce{
+    string id = 1;
+    string title = 2;
+    string content = 3;
+    string location = 4;
+    repeated string tags = 5;
+    string author_id = 6;
+    string created_at = 7;
+}
+
+message UpdateStoriesRequest{
+    string title = 1;
+    string content = 2;
+}
+
+message UpdateStoriesResponce{
+    string id = 1;
+    string title = 2;
+    string content = 3;
+    string location = 4;
+    repeated string tags = 5;
+    string author_id = 6;
+    string updated_at = 7;
+}
+
+message DeleteStoriesRequest{
+    string id = 1;
+}
+
+message DeleteStoriesResponce{
+    string message = 1;
+}
+
+message GetStoriesRequest{
+    string id = 1;
+}
+
+message GetStoriesResponce{
+    string id = 1;
+    string title = 2;
+    string content = 3;
+    string location = 4;
+    repeated string tags =5;
+    Author author = 6;    
+    int32 likes_count = 7;
+    int32 comments_count = 8;
+    string created_at = 9;
+    string updated_at = 10;
+}
+
+message Author{
+    string id = 1;
+    string user_name = 2;
+}
+
+message GetsStoriesRequest{
+    int32 page = 1;
+    int32 limit = 2;
+}
+
+message GetsStoriesResponce{
+    repeated GetStoriesResponce stories = 1;
+    int32 total = 2;
+    int32 page = 3;
+    int32 titil = 4;
+}
+
+message CommentStoriesRequest{
+    string content = 1;
+}
+
+message CommentStoriesResponce{
+    string id = 1;
+    string content = 2;
+    string author_id = 3;
+    string story_id = 4;
+    string created_at = 5;
+}
+
+message GetCommentStoriesRequest{
+    int32 page = 1;
+    int32 limit = 2;
+}
+
+message GetCommentStoriesResponce{
+    repeated Comment comment = 1;
+    int32 total = 2;
+    int32 page = 3;
+    int32 limit = 4;
+}
+
+message Comment{
+    string id = 1;
+    string content = 2;
+    Author author = 3;
+    string created_at = 4; 
+}
+
+message LikeStoriesRequest{
+    string stories_id = 1;
+}
+
+message LikeStoriesResponce{
+    string story_id = 1;
+    string user_id = 2;
+    string liked_at = 3;
+}
+
+message CreateItinerariesRequest{
+    string title = 1;
+    string description = 2;
+    string start_date = 3;
+    string end_date = 4;
+    repeated Destination destinations = 5;
+}
+
+message Destination{
+    string name = 1;
+    string start_date = 2;
+    string end_date = 3;
+    repeated string activities = 4;
+}
+
+message CreateItinerariesResponce{
+    string id = 1;
+    string title = 2;
+    string description = 3;
+    string start_date = 4;
+    string end_date = 5;
+    string author_id = 6;
+    string created_at = 7;
+}
+
+message UpdateItinerariesRequest{
+    string title = 1;
+    string description = 2;
+}
+
+message UpdateItinerariesResponce{
+    string id = 1;
+    string title = 2;
+    string description = 3;
+    string start_date = 4;
+    string end_date = 5;
+    string author_id = 6;
+    string updated_at = 7;
+}
+
+message DeleteItinerariesRequest{
+    string id = 1;
+}
+
+message DeleteItinerariesResponce{
+    string message = 1;
+}
+
+message GetsItinerariesRequest{
+    int32 page = 1;
+    int32 limit = 2;
+}
+
+message GetsItinerariesResponce{
+    repeated Itinerarie itineraries = 1;
+    int32 total = 2;
+    int32 page = 3;
+    int32 limit = 4;
+}
+
+message Itinerarie{
+    string id = 1;
+    string title = 2;
+    Author author = 3;
+    string start_date = 4;
+    string end_date = 5;
+    int32 likes_count = 6;
+    int32 comments_count = 7;
+    string created_at = 8;
+}
+
+message GetItinerariesRequest{
+    string id = 1;
+}
+
+message GetItinerariesResponce{
+    string id = 1;
+    string title = 2;
+    string description = 3;
+    string start_date = 4;
+    string end_date = 5;
+    Author author = 6;
+    repeated Destination destinations = 7;
+    int32 likes_count = 8;
+    int32 comments_count = 9;
+    string created_at = 10;
+    string updated_at = 11;
+}
+
+message ItinerariesCommentRequest{
+    string content = 1;
+}
+
+message ItinerariesCommentResponce{
+    string id = 1;
+    string content = 2;
+    string author_id = 3;
+    string itinerary_id = 4;
+    string created_at = 5;
+}
+
+message GetsDestinationsRequest{
+    string query = 1;
+    int32 page = 2;
+    int32 limit = 3;
+}
+
+message GetsDestinationsResponce{
+    repeated Destination destinations = 1;
+    int32 total = 2;
+    int32 page = 3;
+    int32 limit = 4;
+}
+
+message GetDestinationsRequest{
+    string id = 1;
+}
+
+message GetDestinationsResponce{
+    string id = 1;
+    string name = 2;
+    string country = 3;
+    string description = 4;
+    repeated string popular_activities = 5;
+    string best_time_to_visit = 6;
+    int32 average_cost_per_day = 7;
+    string currency = 8;
+    string language = 9;
+    repeated string top_attractions = 10;
+}
+
+message MessageRequest{
+    string recipient_id = 1;
+    string content = 2;
+}
+
+message MessageResponce{
+    string id = 1;
+    string sender_id = 2;
+    string recipient_id = 3;
+    string content = 4;
+    string created_at = 5;
+}
+
+message GetMessageRequest{
+    int32 page = 1;
+    int32 limit = 2;
+}
+
+message GetMessageResponce{
+    repeated Message messages = 1;
+    int32 total = 2;
+    int32 page = 3;
+    int32 limit = 4;
+}
+
+message Message{
+    string id = 1;
+    repeated Sender sender = 2;
+    Recipient recipient = 3;
+    string content = 4;
+    string created_at = 6;
+}
+
+message Sender{
+    string id = 1;
+    string user_name = 2;
+}
+
+message Recipient{
+    string id = 1;
+    string user_name = 2;
+}
+message AddTravelTipsRequest{
+    string title = 1;
+    string content = 2;
+    string category = 3;
+}
+
+message AddTravelTipsResponce{
+    string id = 1;
+    string title = 2;
+    string content = 3;
+    string category = 4;
+    string author_id = 5;
+    string created_at = 6;
+}
+
+message GetTravelTipsRequest{
+    string category = 1;
+    int32 page = 2;
+    int32 limit = 3;
+}
+
+message GetTravelTipsResponce{
+    repeated Tip tips = 1;
+    int32 total = 2;
+    int32 page = 3;
+    int32 limit = 4;
+}
+
+message Tip{
+    string id = 1;
+    string title = 2;
+    string category = 3;
+    Author author = 4;
+    string created_at = 5;
+}
+
+message StatisticsUserRequest{
+    string user_id = 1;
+}
+
+message StatisticsUserResponce{
+    string user_id = 1;
+    int32 total_stories = 2;
+    int32 total_itineraries = 3;
+    int32 total_countries_visited = 4;
+    int32 total_likes_received = 5;
+    int32 total_comments_received = 6;
+    Most_popular_story most_popular_story = 7;
+    Most_popular_itinerary most_popular_itinerary = 8;
+}
+
+message Most_popular_story{
+    string id = 1;
+    string title = 2;
+    int32 likes_count = 3;
+}
+
+message Most_popular_itinerary{
+    string id = 1;
+    string title = 2;
+    int32 likes_count = 3;
+}
+
+message GetTrendingDestinationsRequest{
+    
+}
+
+message GetTrendingDestinationsResponce{
+    repeated Destinations destinations = 1;
+    int32 total = 2;
+}
+message Destinations{
+    string id = 1;
+    string name = 2;
+    string country = 3;
+    int32 popularity_score = 4;
+    string trending_reason = 5;
+}
