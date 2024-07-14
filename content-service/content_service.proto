@@ -40,7 +40,6 @@ message CreateStoriesRequest{
     string content = 2;
     string location = 3;
     repeated string tags = 4;
-    repeated string images = 5;
 }
 
 message CreateStoriesResponce{
