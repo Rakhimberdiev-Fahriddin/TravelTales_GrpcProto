@@ -39,11 +39,21 @@ message LoginRequest{
 }
 
 message LoginResponce{
-    string access_token     = 1;
-    string refresh_token    = 2;
+    string id=1;
+    string username=2;
+    string email=3;
+    string password=4;
+    string full_name=5;
+    string bio=6;
+    int64 countries_visited=7;
 }
 
- message GetProfileRequest{
+message Tokens{
+    string accestoken=1;
+    string refreshtoken=2;
+  }
+  
+message GetProfileRequest{
     string id = 1;
 }
 
@@ -62,6 +72,7 @@ message UpdateProfileRequest{
     string full_name            = 1;
     string bio                  = 2;
     int32 countries_visited    = 3;
+    string user_id = 4;
 }
 
 message UpdateProfileResponce{
@@ -102,11 +113,12 @@ message DeleteProfileResponce{
 }
 
 message ResetPasswordRequest{
-    string email = 1;
+    string user_id = 1;
+    string email = 2;
 }
 
 message ResetPasswordResponce{
-    string message = 1;
+    string password = 1;
 }
 
 message RefreshTokenRequest{
@@ -136,12 +148,12 @@ message ActivityResponce{
     int32 stories_count     = 2;
     int32 comments_count    = 3;    
     int32 likes_received    = 4;
-    int32 countries_visited = 5;
     string last_active      = 6;
 }
 
 message FollowRequest{
-    string user_id = 1;
+    string follower_id = 1;
+    string following_id = 2;
 }
 
 message FollowResponce{
@@ -157,8 +169,14 @@ message FollowersRequest{
 }
 
 message FollowersResponce{
-    repeated FollowersResponce followers = 1;
-    int32 total                          = 2;
-    int32 page                           = 3;
-    int32 limit                          = 4;
+    repeated Follower followers = 1;
+    int32 total = 2;                      
+    int32 page  = 3;                       
+    int32 limit   = 4;
+}
+
+message Follower{
+    string id = 1;
+    string user_name = 2;
+    string full_name = 3;
 }
