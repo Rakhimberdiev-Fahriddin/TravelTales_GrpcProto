@@ -31,7 +31,7 @@ service Content{
     rpc GetTravelTips(GetTravelTipsRequest) returns(GetTravelTipsResponce);
     
     rpc StatisticsUser(StatisticsUserRequest) returns(StatisticsUserResponce);
-
+ 
     rpc GetTrendingDestinations(GetTrendingDestinationsRequest) returns(GetTrendingDestinationsResponce);
 }
 
@@ -47,9 +47,14 @@ message CreateStoriesResponce{
     string title = 2;
     string content = 3;
     string location = 4;
-    repeated string tags = 5;
+    repeated Tag tags = 5;
     string author_id = 6;
     string created_at = 7;
+}
+
+message Tag{
+    string story_id = 1;
+    string tag = 2;
 }
 
 message UpdateStoriesRequest{
@@ -62,7 +67,7 @@ message UpdateStoriesResponce{
     string title = 2;
     string content = 3;
     string location = 4;
-    repeated string tags = 5;
+    repeated Tag tags = 5;
     string author_id = 6;
     string updated_at = 7;
 }
@@ -84,7 +89,7 @@ message GetStoriesResponce{
     string title = 2;
     string content = 3;
     string location = 4;
-    repeated string tags =5;
+    repeated Tag tags =5;
     Author author = 6;    
     int32 likes_count = 7;
     int32 comments_count = 8;
@@ -106,7 +111,7 @@ message GetsStoriesResponce{
     repeated GetStoriesResponce stories = 1;
     int32 total = 2;
     int32 page = 3;
-    int32 titil = 4;
+    int32 Limit = 4;
 }
 
 message CommentStoriesRequest{
@@ -231,12 +236,18 @@ message GetItinerariesResponce{
     string description = 3;
     string start_date = 4;
     string end_date = 5;
-    Author author = 6;
+    ItinerarieAuthor author = 6;
     repeated Destination destinations = 7;
     int32 likes_count = 8;
     int32 comments_count = 9;
     string created_at = 10;
     string updated_at = 11;
+}
+
+message ItinerarieAuthor{
+    string id = 1;
+    string user_name = 2;
+    string full_name = 3;
 }
 
 message ItinerariesCommentRequest{
@@ -258,11 +269,19 @@ message GetsDestinationsRequest{
 }
 
 message GetsDestinationsResponce{
-    repeated Destination destinations = 1;
+    repeated Destinat destinations = 1;
     int32 total = 2;
     int32 page = 3;
     int32 limit = 4;
 }
+
+message Destinat{
+    string id = 1;
+    string name = 2;
+    string country = 3;
+    string description = 4;
+}
+
 
 message GetDestinationsRequest{
     string id = 1;
@@ -273,12 +292,10 @@ message GetDestinationsResponce{
     string name = 2;
     string country = 3;
     string description = 4;
-    repeated string popular_activities = 5;
     string best_time_to_visit = 6;
     int32 average_cost_per_day = 7;
     string currency = 8;
     string language = 9;
-    repeated string top_attractions = 10;
 }
 
 message MessageRequest{
@@ -308,8 +325,7 @@ message GetMessageResponce{
 
 message Message{
     string id = 1;
-    repeated Sender sender = 2;
-    Recipient recipient = 3;
+    Sender sender = 2;
     string content = 4;
     string created_at = 6;
 }
@@ -319,10 +335,6 @@ message Sender{
     string user_name = 2;
 }
 
-message Recipient{
-    string id = 1;
-    string user_name = 2;
-}
 message AddTravelTipsRequest{
     string title = 1;
     string content = 2;
@@ -361,6 +373,7 @@ message Tip{
 
 message StatisticsUserRequest{
     string user_id = 1;
+    int32 total_countries_visited = 2;
 }
 
 message StatisticsUserResponce{
@@ -399,5 +412,4 @@ message Destinations{
     string name = 2;
     string country = 3;
     int32 popularity_score = 4;
-    string trending_reason = 5;
 }
