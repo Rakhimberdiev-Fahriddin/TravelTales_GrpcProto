@@ -299,7 +299,7 @@ message GetDestinationsResponce{
     string country = 3;
     string description = 4;
     string best_time_to_visit = 6;
-    int32 average_cost_per_day = 7;
+    float average_cost_per_day = 7;
     string currency = 8;
     string language = 9;
 }
